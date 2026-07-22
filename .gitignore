@@ -9,3 +9,6 @@ npm-debug.log*
 next-env.d.ts
 
 .env*
+
+# raw hero source video (encoded versions live in public/hero/)
+Camera_moves_into_sunlit_valley_*.mp4

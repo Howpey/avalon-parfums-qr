@@ -43,6 +43,33 @@ body {
   font-weight: 300;
 }
 
+/* --- scroll-world engine overrides (unlayered → win over its @layer sw) --- */
+/* Gold primary CTA + site-matching radius over the video hero */
+.sw-root .sw-btn {
+  border-radius: 0.5rem;
+}
+.sw-root .sw-btn--primary {
+  background: #c9a24b;
+  color: #0f1011;
+}
+.sw-root .sw-btn--primary:hover {
+  background: #e3c378;
+}
+.sw-root .sw-btn--ghost {
+  color: #f5f5f7;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+/* Eyebrow in the mono voice, matching the rest of the site */
+.sw-root .sw-copy__eyebrow {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 500;
+}
+/* Single-scene hero: hide the multi-scene route rail and top progress bar */
+.sw-root .sw-route,
+.sw-root .sw-scrollbar {
+  display: none;
+}
+
 /* Reduced motion: never hide content behind an animation that won't run */
 @media (prefers-reduced-motion: reduce) {
   *,
