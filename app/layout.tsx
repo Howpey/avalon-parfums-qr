@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 
 const sans = Inter({
@@ -11,6 +11,12 @@ const sans = Inter({
 const display = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-display",
+  display: "swap",
+});
+
+const mono = Roboto_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -34,7 +40,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#14110b",
+  themeColor: "#0f1011",
 };
 
 export default function RootLayout({
@@ -43,7 +49,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${sans.variable} ${display.variable}`}>
+    <html
+      lang="pt-BR"
+      className={`${sans.variable} ${display.variable} ${mono.variable}`}
+    >
       <body className="font-sans">{children}</body>
     </html>
   );
