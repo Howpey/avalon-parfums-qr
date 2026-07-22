@@ -51,6 +51,15 @@ const CreamIcon = ({ className }: IconProps) => (
   </svg>
 );
 
+const TruckIcon = ({ className }: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M3 6h10v9H3z" />
+    <path d="M13 9h4l3 3v3h-7z" />
+    <circle cx="7" cy="18" r="1.6" />
+    <circle cx="17" cy="18" r="1.6" />
+  </svg>
+);
+
 const catalogItems = [
   {
     Icon: NicheIcon,
@@ -155,7 +164,7 @@ export default function Home() {
           </p>
         </div>
         <div className="mx-auto mt-10 flex max-w-lg items-center gap-5 rounded-2xl bg-graphite p-6">
-          <span className="text-3xl">🚚</span>
+          <TruckIcon className="size-8 shrink-0 text-gold" />
           <p className="text-[15px] leading-snug text-ash">
             <strong className="font-medium text-cloud">Frete grátis com entrega em até 24h</strong>
             <br />
