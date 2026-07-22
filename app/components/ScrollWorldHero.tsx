@@ -42,6 +42,7 @@ export default function ScrollWorldHero() {
           id: "hero",
           label: "Avalon",
           still: "/hero/valley-poster.jpg",
+          stillMobile: "/hero/valley-m-poster.jpg",
           clip: "/hero/valley.mp4",
           clipMobile: "/hero/valley-m.mp4",
           accent: "#c9a24b",
