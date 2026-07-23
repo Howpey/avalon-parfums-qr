@@ -88,26 +88,21 @@ export const formatVolume = (ml: number | null) =>
 export const PRODUCTS_LIMIT = 12;
 
 /**
- * WhatsApp number for purchases, digits only with country code
- * (e.g. 5513999999999). Set NEXT_PUBLIC_WHATSAPP_NUMBER to enable the
- * "Comprar no WhatsApp" buttons; without it they fall back to Instagram.
+ * Message a buyer sends about a product. Instagram has no URL parameter for
+ * pre-filling a DM (unlike WhatsApp's ?text=), so the UI copies this to the
+ * clipboard and opens the conversation for the customer to paste.
  */
-export const WHATSAPP_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "").replace(/\D/g, "");
-
-/** Builds a wa.me link pre-filled with a message about this product. */
-export function whatsappLink(p: {
+export function purchaseMessage(p: {
   name: string;
   brand?: string | null;
   price?: number | null;
-}): string | null {
-  if (!WHATSAPP_NUMBER) return null;
-  const parts = [
-    `Olá! Vim pelo site e tenho interesse no *${p.name}*`,
+}): string {
+  return [
+    `Olá! Vim pelo site e tenho interesse no ${p.name}`,
     p.brand ? ` da ${p.brand}` : "",
     p.price ? ` (${formatPrice(p.price)})` : "",
     ". Ainda está disponível?",
-  ];
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(parts.join(""))}`;
+  ].join("");
 }
 
 /**

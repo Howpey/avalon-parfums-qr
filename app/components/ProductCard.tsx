@@ -1,14 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import {
   type PublicProduct,
   label,
   formatPrice,
   formatVolume,
-  whatsappLink,
+  purchaseMessage,
 } from "../lib/products";
-import { INSTAGRAM_URL } from "./shared";
-import { WhatsAppIcon, InstagramIcon } from "./icons";
+import { INSTAGRAM_DM_URL } from "./shared";
+import { InstagramIcon } from "./icons";
 
 const chip =
   "rounded-full border border-white/10 px-3 py-1 font-mono text-[10.5px] uppercase tracking-wide text-ash";
@@ -38,7 +39,23 @@ export default function ProductCard({
     label.audience(p.audience),
   ].filter(Boolean);
   const traits = [label.longevity(p.longevity), label.sillage(p.sillage)].filter(Boolean);
-  const wa = whatsappLink({ name: p.name, brand: p.brand, price: p.price });
+  const [copied, setCopied] = useState(false);
+
+  /**
+   * Instagram has no way to pre-fill a DM from a link, so copy the message and
+   * open the conversation — the customer just pastes it.
+   */
+  const buy = async () => {
+    const message = purchaseMessage({ name: p.name, brand: p.brand, price: p.price });
+    try {
+      await navigator.clipboard.writeText(message);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      // Clipboard blocked (older browsers / no permission) — still open the DM.
+    }
+    window.open(INSTAGRAM_DM_URL, "_blank", "noopener");
+  };
 
   return (
     <article className="flex flex-col overflow-hidden rounded-[30px] bg-graphite transition-colors hover:bg-steel">
@@ -98,28 +115,20 @@ export default function ProductCard({
             <span className="display text-2xl text-gold-bright">{formatPrice(p.price)}</span>
           )}
 
-          {buyable &&
-            (wa ? (
-              <a
-                href={wa}
-                target="_blank"
-                rel="noopener"
+          {buyable && (
+            <>
+              <button
+                onClick={buy}
                 className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-gold text-[14px] font-medium text-obsidian transition-colors hover:bg-gold-bright"
               >
-                <WhatsAppIcon className="size-[18px]" />
-                Comprar no WhatsApp
-              </a>
-            ) : (
-              <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener"
-                className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-white/20 text-[14px] font-medium text-cloud transition-colors hover:bg-white/5"
-              >
                 <InstagramIcon className="size-[18px]" />
-                Falar no Instagram
-              </a>
-            ))}
+                {copied ? "Mensagem copiada — cole na DM" : "Comprar no Instagram"}
+              </button>
+              <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-wide text-fog">
+                copiamos sua mensagem · é só colar
+              </p>
+            </>
+          )}
         </div>
       </div>
     </article>

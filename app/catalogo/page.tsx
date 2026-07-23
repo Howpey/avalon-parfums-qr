@@ -8,7 +8,7 @@ import { STORE_URL, INSTAGRAM_URL } from "../components/shared";
 export const metadata: Metadata = {
   title: "Catálogo — Avalon Parfums",
   description:
-    "Catálogo completo da Avalon Parfums: perfumes de nicho, importados, árabes e inspirações. Compre pelo WhatsApp com entrega em até 24h na Baixada Santista.",
+    "Catálogo completo da Avalon Parfums: perfumes de nicho, importados, árabes e inspirações. Compre pelo Instagram com entrega em até 24h na Baixada Santista.",
 };
 
 export default async function CatalogoPage() {
@@ -25,8 +25,8 @@ export default async function CatalogoPage() {
             Todas as nossas <em className="italic text-gold-gradient">fragrâncias</em>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-[16px] leading-relaxed text-ash">
-            Busque, filtre e fale com a gente no WhatsApp para comprar. Entrega grátis em até 24h
-            para toda a Baixada Santista.
+            Busque, filtre e fale com a gente no Instagram para comprar — a mensagem já vai
+            pronta. Entrega grátis em até 24h para toda a Baixada Santista.
           </p>
         </div>
 
