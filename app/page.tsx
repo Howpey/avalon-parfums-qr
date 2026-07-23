@@ -5,6 +5,8 @@ import ScrollVisual from "./components/ScrollVisual";
 import CatalogTiles from "./components/CatalogTiles";
 import Testimonials from "./components/Testimonials";
 import Reveal from "./components/Reveal";
+import ProductGrid from "./components/ProductGrid";
+import { getProducts } from "./lib/products";
 import { STORE_URL, INSTAGRAM_URL, primaryBtn, ghostBtn } from "./components/shared";
 import { ArrowIcon, InstagramIcon, TruckIcon } from "./components/icons";
 
@@ -21,7 +23,10 @@ const instagramPosts = [
   "https://www.instagram.com/p/DZaWmiMtEi_/",
 ];
 
-export default function Home() {
+export default async function Home() {
+  // Products come live from the Avalon CRM (curated public view).
+  const products = await getProducts();
+
   return (
     <main className="relative min-h-screen bg-obsidian">
       <Nav />
@@ -56,6 +61,7 @@ export default function Home() {
         <ScrollVisual />
 
         <CatalogTiles />
+        <ProductGrid products={products} />
 
         {/* Vantagens + cupom */}
         <section className="mx-auto max-w-[1200px] px-6 py-20">
