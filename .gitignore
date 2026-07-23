@@ -13,3 +13,6 @@ next-env.d.ts
 # raw hero source videos (encoded versions live in public/hero/)
 Camera_moves_into_sunlit_valley_*.mp4
 videomobile.mp4
+
+# imagens originais dos cards (versões otimizadas em public/cards/)
+*.jpg.png
