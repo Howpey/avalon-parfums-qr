@@ -84,20 +84,24 @@ export const formatPrice = (value: number | null) =>
 export const formatVolume = (ml: number | null) =>
   ml == null ? "" : `${Number(ml) % 1 === 0 ? Number(ml).toFixed(0) : ml} ml`;
 
+/** How many products the landing page grid shows (newest first). */
+export const PRODUCTS_LIMIT = 12;
+
 /**
  * Fetches the public catalog. Returns [] when the CRM connection isn't configured
  * or the request fails, so the page always renders.
  */
-export async function getProducts(): Promise<PublicProduct[]> {
+export async function getProducts(limit = PRODUCTS_LIMIT): Promise<PublicProduct[]> {
   const url = process.env.CRM_SUPABASE_URL;
   const key = process.env.CRM_SUPABASE_ANON_KEY;
   if (!url || !key) return [];
 
-  const endpoint =
-    `${url.replace(/\/$/, "")}/rest/v1/public_products` +
-    `?select=*&order=created_at.desc`;
+  const base = `${url.replace(/\/(rest\/v1\/?)?$/, "")}/rest/v1/public_products`;
 
-  try {
+  const query = async (withImageOnly: boolean) => {
+    const endpoint =
+      `${base}?select=*&order=created_at.desc&limit=${limit}` +
+      (withImageOnly ? "&main_image_url=not.is.null" : "");
     const res = await fetch(endpoint, {
       headers: { apikey: key, Authorization: `Bearer ${key}` },
       // The CRM webhook revalidates this tag; the interval is a safety net.
@@ -109,6 +113,13 @@ export async function getProducts(): Promise<PublicProduct[]> {
     }
     const data = (await res.json()) as PublicProduct[];
     return Array.isArray(data) ? data : [];
+  };
+
+  try {
+    // The showcase looks best with photos; fall back to any product when the
+    // CRM has none with an image yet.
+    const withImages = await query(true);
+    return withImages.length > 0 ? withImages : await query(false);
   } catch (err) {
     console.error("getProducts: failed to reach the CRM", err);
     return [];

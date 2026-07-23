@@ -8,6 +8,8 @@ import {
   formatPrice,
   formatVolume,
 } from "../lib/products";
+import { STORE_URL, ghostBtn } from "./shared";
+import { ArrowIcon } from "./icons";
 
 const chip =
   "rounded-full border border-white/10 px-3 py-1 font-mono text-[10.5px] uppercase tracking-wide text-ash";
@@ -130,6 +132,18 @@ export default function ProductGrid({ products }: { products: PublicProduct[] })
             </article>
           );
         })}
+      </div>
+
+      <div className="mt-10 text-center">
+        <a
+          href={STORE_URL}
+          target="_blank"
+          rel="noopener"
+          className={ghostBtn}
+        >
+          Ver catálogo completo
+          <ArrowIcon className="size-[18px]" />
+        </a>
       </div>
     </section>
   );
