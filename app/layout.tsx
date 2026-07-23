@@ -20,19 +20,39 @@ const mono = Roboto_Mono({
   display: "swap",
 });
 
+const DESCRIPTION =
+  "Exclusividade que desperta sentidos. Perfumes de nicho, importados, árabes e inspirações a partir de R$ 69,90. Frete grátis em até 24h para a Baixada Santista.";
+
 export const metadata: Metadata = {
-  title: "Avalon Parfums — Perfumaria de Nicho",
-  description:
-    "Exclusividade que desperta sentidos. Perfumes de nicho, importados, árabes e inspirações a partir de R$ 69,90. Frete grátis em até 24h para a Baixada Santista.",
+  metadataBase: new URL("https://avalon-parfums-qr.vercel.app"),
+  title: {
+    default: "Avalon Parfums — Perfumaria de Nicho",
+    template: "%s | Avalon Parfums",
+  },
+  description: DESCRIPTION,
+  keywords: [
+    "perfumes de nicho",
+    "perfumes importados",
+    "perfumes árabes",
+    "perfumaria",
+    "Avalon Parfums",
+    "Baixada Santista",
+    "Santos",
+    "decants",
+  ],
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
   openGraph: {
     title: "Avalon Parfums — Perfumaria de Nicho",
     description:
       "Exclusividade que desperta sentidos. Perfumes de nicho, importados, árabes e inspirações exclusivas.",
+    url: "/",
+    siteName: "Avalon Parfums",
     locale: "pt_BR",
     type: "website",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Avalon Parfums — Perfumaria de Nicho",
     description:
       "Exclusividade que desperta sentidos. Perfumes de nicho, importados, árabes e inspirações exclusivas.",

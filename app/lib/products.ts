@@ -84,6 +84,45 @@ export const formatPrice = (value: number | null) =>
 export const formatVolume = (ml: number | null) =>
   ml == null ? "" : `${Number(ml) % 1 === 0 ? Number(ml).toFixed(0) : ml} ml`;
 
+const kebab = (s: string) =>
+  (s || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+/**
+ * SEO-friendly URL for a product: name + brand + a short id suffix that keeps
+ * it unique and easy to look up (e.g. "khamrah-waha-lattafa-3f9a1b2c").
+ */
+export function slugify(p: { id: string; name: string; brand?: string | null }): string {
+  const base = [p.name, p.brand ?? ""]
+    .map(kebab)
+    .filter(Boolean)
+    .join("-");
+  return `${base}-${p.id.slice(0, 8)}`;
+}
+
+/** Finds the product a slug points to (matches on the trailing id prefix). */
+export async function getProductBySlug(slug: string): Promise<PublicProduct | null> {
+  const idPart = slug.split("-").pop() ?? "";
+  if (idPart.length < 4) return null;
+  const all = await getAllProducts();
+  return all.find((p) => p.id.startsWith(idPart)) ?? null;
+}
+
+/** Other products in the same category, for the "veja também" section. */
+export function relatedProducts(
+  product: PublicProduct,
+  all: PublicProduct[],
+  n = 6,
+): PublicProduct[] {
+  return all
+    .filter((p) => p.id !== product.id && p.category === product.category)
+    .slice(0, n);
+}
+
 import { getStoreIndex, matchStoreImage } from "./storeImages";
 
 /** How many products the landing page grid shows (newest first). */

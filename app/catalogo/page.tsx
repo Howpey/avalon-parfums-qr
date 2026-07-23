@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Catálogo — Avalon Parfums",
   description:
     "Catálogo completo da Avalon Parfums: perfumes de nicho, importados, árabes e inspirações. Compre pelo Instagram com entrega em até 24h na Baixada Santista.",
+  alternates: { canonical: "/catalogo" },
 };
 
 export default async function CatalogoPage() {
