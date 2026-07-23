@@ -5,10 +5,11 @@ import { gsap, useGSAP, prefersReducedMotion } from "./gsap";
 import { STORE_URL } from "./shared";
 import { ArrowIcon } from "./icons";
 
+// Absolute so they work from any page (home anchors + the catalog route).
 const links = [
-  { label: "Catálogo", href: "#catalogo" },
-  { label: "Sobre", href: "#sobre" },
-  { label: "Depoimentos", href: "#depoimentos" },
+  { label: "Catálogo", href: "/catalogo" },
+  { label: "Sobre", href: "/#sobre" },
+  { label: "Depoimentos", href: "/#depoimentos" },
 ];
 
 export default function Nav() {
@@ -28,7 +29,7 @@ export default function Nav() {
       className="fixed inset-x-0 top-0 z-[140] border-b border-white/[0.06] bg-obsidian/70 backdrop-blur-2xl"
     >
       <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-4">
-        <a href="#top" className="display text-xl tracking-wide">
+        <a href="/" className="display text-xl tracking-wide">
           Avalon Parfums
         </a>
         <nav className="hidden items-center gap-8 md:flex">
