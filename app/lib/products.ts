@@ -85,7 +85,7 @@ export const formatVolume = (ml: number | null) =>
   ml == null ? "" : `${Number(ml) % 1 === 0 ? Number(ml).toFixed(0) : ml} ml`;
 
 /** How many products the landing page grid shows (newest first). */
-export const PRODUCTS_LIMIT = 12;
+export const PRODUCTS_LIMIT = 20;
 
 /**
  * Message a buyer sends about a product. Instagram has no URL parameter for

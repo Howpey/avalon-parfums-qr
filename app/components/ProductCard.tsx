@@ -12,18 +12,7 @@ import { INSTAGRAM_DM_URL } from "./shared";
 import { InstagramIcon } from "./icons";
 
 const chip =
-  "rounded-full border border-white/10 px-3 py-1 font-mono text-[10.5px] uppercase tracking-wide text-ash";
-
-function Notes({ title, notes }: { title: string; notes: string[] | null }) {
-  if (!notes || notes.length === 0) return null;
-  return (
-    <p className="text-[13px] leading-relaxed text-ash">
-      <span className="font-mono text-[10.5px] uppercase tracking-wide text-fog">{title}</span>
-      <br />
-      {notes.join(" · ")}
-    </p>
-  );
-}
+  "rounded-full border border-white/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-wide text-ash";
 
 export default function ProductCard({
   product: p,
@@ -32,13 +21,8 @@ export default function ProductCard({
   product: PublicProduct;
   buyable?: boolean;
 }) {
-  const meta = [
-    label.type(p.type),
-    label.concentration(p.concentration),
-    formatVolume(p.volume_ml),
-    label.audience(p.audience),
-  ].filter(Boolean);
-  const traits = [label.longevity(p.longevity), label.sillage(p.sillage)].filter(Boolean);
+  // Kept short on purpose: these cards are a dense browsing grid.
+  const meta = [label.concentration(p.concentration), formatVolume(p.volume_ml)].filter(Boolean);
   const [copied, setCopied] = useState(false);
 
   /**
@@ -58,37 +42,27 @@ export default function ProductCard({
   };
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-[30px] bg-graphite transition-colors hover:bg-steel">
+    <article className="flex flex-col overflow-hidden rounded-2xl bg-graphite transition-colors hover:bg-steel">
       {p.main_image_url && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={p.main_image_url}
           alt={p.name}
           loading="lazy"
-          className="aspect-[4/3] w-full object-cover"
+          className="aspect-square w-full object-cover"
         />
       )}
 
-      <div className="flex flex-1 flex-col p-7">
+      <div className="flex flex-1 flex-col p-3.5">
         {p.brand && (
-          <span className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-gold">
+          <span className="truncate font-mono text-[9px] uppercase tracking-[0.14em] text-gold">
             {p.brand}
           </span>
         )}
-        <h3 className="display mt-2 text-[22px] leading-tight text-cloud">{p.name}</h3>
-
-        {p.category && (
-          <span className="mt-3 w-fit rounded-full bg-white/[0.06] px-3 py-1 font-mono text-[10.5px] uppercase tracking-wide text-ash">
-            {p.category}
-          </span>
-        )}
-
-        {p.description && (
-          <p className="mt-4 line-clamp-3 text-[14px] leading-relaxed text-ash">{p.description}</p>
-        )}
+        <h3 className="display mt-1 line-clamp-2 text-[15px] leading-snug text-cloud">{p.name}</h3>
 
         {meta.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-1.5">
+          <div className="mt-2 flex flex-wrap gap-1">
             {meta.map((m) => (
               <span key={m} className={chip}>
                 {m}
@@ -97,37 +71,20 @@ export default function ProductCard({
           </div>
         )}
 
-        <div className="mt-4 space-y-2">
-          <Notes title="Saída" notes={p.top_notes} />
-          <Notes title="Coração" notes={p.heart_notes} />
-          <Notes title="Fundo" notes={p.base_notes} />
-        </div>
-
-        {traits.length > 0 && (
-          <p className="mt-3 font-mono text-[10.5px] uppercase tracking-wide text-fog">
-            {traits.join(" · ")}
-          </p>
-        )}
-
-        {/* Price + buy pinned to the bottom so cards align regardless of copy length */}
-        <div className="mt-auto pt-6">
+        <div className="mt-auto pt-3">
           {p.price != null && p.price > 0 && (
-            <span className="display text-2xl text-gold-bright">{formatPrice(p.price)}</span>
+            <span className="display text-[17px] text-gold-bright">{formatPrice(p.price)}</span>
           )}
 
           {buyable && (
-            <>
-              <button
-                onClick={buy}
-                className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-gold text-[14px] font-medium text-obsidian transition-colors hover:bg-gold-bright"
-              >
-                <InstagramIcon className="size-[18px]" />
-                {copied ? "Mensagem copiada — cole na DM" : "Comprar no Instagram"}
-              </button>
-              <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-wide text-fog">
-                copiamos sua mensagem · é só colar
-              </p>
-            </>
+            <button
+              onClick={buy}
+              title="Copia a mensagem e abre a DM do Instagram"
+              className="mt-2.5 inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-lg bg-gold text-[12px] font-medium text-obsidian transition-colors hover:bg-gold-bright"
+            >
+              <InstagramIcon className="size-[14px]" />
+              {copied ? "Copiado — cole na DM" : "Comprar"}
+            </button>
           )}
         </div>
       </div>

@@ -35,7 +35,10 @@ export default function ProductGrid({ products }: { products: PublicProduct[] })
         <h3 className="display mt-3 text-[clamp(26px,4.5vw,38px)]">Disponíveis agora</h3>
       </div>
 
-      <div ref={gridRef} className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        ref={gridRef}
+        className="mt-10 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+      >
         {products.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}

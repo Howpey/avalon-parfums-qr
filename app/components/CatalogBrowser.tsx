@@ -135,7 +135,7 @@ export default function CatalogBrowser({ products }: { products: PublicProduct[]
           Nenhum produto encontrado com esses filtros.
         </p>
       ) : (
-        <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {visible.map((p) => (
             <ProductCard key={p.id} product={p} buyable />
           ))}
